@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Yii 2 Basic Application Template
 ================================
 
@@ -86,3 +87,9 @@ return [
 **NOTE:** Yii won't create the database for you, this has to be done manually before you can access it.
 
 Also check and edit the other files in the `config/` directory to customize your application.
+=======
+dms
+===
+
+Database Management System
+>>>>>>> 42480bdda0ea5f250d6ee5bc64c829e1c8c67c77
