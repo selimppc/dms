@@ -8,6 +8,7 @@ body {
 	height: auto;
 	margin: 0 auto -60px;
 	padding: 0 0 60px;
+    background-color: #F9F9F9;
 }
 
 .wrap > .container {
