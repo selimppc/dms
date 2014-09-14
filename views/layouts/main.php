@@ -19,6 +19,8 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="<?= Yii::$app->request->baseUrl.'/css/style.css'?>" media="all" >
+
 </head>
 <body>
 
@@ -26,26 +28,30 @@ AppAsset::register($this);
     <div class="wrap">
         <?php
             NavBar::begin([
-                'brandLabel' => 'My Company',
+                'brandLabel' => 'iTabps',
                 'brandUrl' => Yii::$app->homeUrl,
+
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
+                'items' => Yii::$app->user->isGuest ? [
                     ['label' => 'Home', 'url' => ['/site/index']],
                     ['label' => 'About', 'url' => ['/site/about']],
                     ['label' => 'Contact', 'url' => ['/site/contact']],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Login', 'url' => ['/site/login']] :
-                        ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                ],
+                ]: app\components\MenuHelper::getMenu(),
             ]);
-            NavBar::end();
+
+        echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right-1'],
+                'items' => Yii::$app->user->isGuest ?[
+                    ['label' => 'Login', 'url' => ['/site/login']]
+                ]:
+                    [['label' => 'Logout (' . Yii::$app->user->identity->username . ')','url' => ['/site/logout'],'linkOptions' => ['data-method' => 'post']]],
+            ]);
+        NavBar::end();
         ?>
 
         <div class="container">
@@ -58,8 +64,8 @@ AppAsset::register($this);
 
     <footer class="footer">
         <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-            <p class="pull-right"><?= Yii::powered() ?></p>
+            <p class="pull-left">&copy; iTabps.com <?= date('Y') ?></p>
+            <p class="pull-right"><?= "Powered by: SelimReza.com" ?></p>
         </div>
     </footer>
 
@@ -67,3 +73,4 @@ AppAsset::register($this);
 </body>
 </html>
 <?php $this->endPage() ?>
+

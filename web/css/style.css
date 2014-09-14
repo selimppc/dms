@@ -50,5 +50,6 @@
 
 /* End 3rd Level Menu */
 
-
-
+div #yii-debug-toolbar-min{
+    display: none;
+}
