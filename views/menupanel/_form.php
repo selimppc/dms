@@ -22,9 +22,9 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'c_type')->dropDownList( ['empty'=>'- please select -', 'Module'=>['MODU'=>'Module'], 'Menu'=>['MENU'=>'Menu', 'SUBM'=>'Sub-Menu']])->hint('Please enter Menu Type')->label('Menu Type') ?>
 
-    <?= $form->field($model, 'c_name')->textInput()->hint('Please enter menu name')->label('Menu Name') ?>
+    <?= $form->field($model, 'c_name')->input('c_name')->hint('Please enter menu name')->label('Menu Name') ?>
 
-    <?= $form->field($model, 'c_redirect')->textInput()->hint('Please enter menu link')->label('Menu Link') ?>
+    <?= $form->field($model, 'c_redirect')->input('c_redirect')->hint('Please enter menu link')->label('Menu Link') ?>
 
     <?= $form->field($model, 'c_parentid')->dropDownList(
         ['Root'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'ROOT'])->all(), 'id', 'c_name'),
@@ -34,7 +34,7 @@ use yii\helpers\ArrayHelper;
         ['prompt'=>'- please select -']
     )->hint('Please select parent menu')->label('Parent Menu Type')  ?>
 
-    <?= $form->field($model, 'c_sortord')->textInput()->hint('Please enter menu order name')->label('Menu Order') ?>
+    <?= $form->field($model, 'c_sortord')->input('c_sortord')->hint('Please enter menu order name')->label('Menu Order') ?>
 
     <?= $form->field($model,'inserttime')->hiddenInput()->label('')   ?>
 
