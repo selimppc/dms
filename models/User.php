@@ -7,12 +7,15 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\db\ActiveRecord;
 use yii\helpers\Security;
-
+use yii\base\Model;
 use yii\web\IdentityInterface;
 
 
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    public $Rolehd;
+    public $Business;
 
     /**
      * @inheritdoc
@@ -28,15 +31,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['password, username'], 'required'],
-            [['c_branch', 'c_roleid', 'c_active', 'c_status'], 'integer'],
-            [['c_expdate', 'inserttime', 'updatetime'], 'safe'],
-            [['username', 'c_desig', 'insertuser', 'updateuser'], 'string', 'max' => 50],
-            [['password'], 'string', 'max' => 32],
-            [['auth_key'], 'string', 'max' => 256],
-            [['c_name'], 'string', 'max' => 100],
-            [['c_cellno'], 'string', 'max' => 15],
-            [['username'], 'unique']
+            [['username', 'password', 'name', 'designation', 'cell_number', 'branch_code', 'business_id', 'c_roleid','c_active', 'c_status'], 'required'],
+            [['password'], 'string'],
+            [['username'], 'unique'],
+            [['username'], 'filter', 'filter' => 'trim'],
+
+            [['id', 'username', 'password', 'auth_key', 'name', 'designation', 'cell_number', 'branch_code', 'c_roleid', 'c_active', 'c_status', 'c_expdate', 'business_id'], 'safe'],
+
+            [['auth_key'], 'string', 'max' => 54],
+            [['name'], 'string', 'max' => 100],
+            [['cell_number'], 'string', 'max' => 15],
+
         ];
     }
 
@@ -47,22 +52,35 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'username' => Yii::t('app', 'User Name'),
+            'username' => Yii::t('app', 'Username'),
             'password' => Yii::t('app', 'Password'),
             'auth_key' => Yii::t('app', 'Auth Key'),
-            'c_name' => Yii::t('app', 'Full Name'),
-            'c_desig' => Yii::t('app', 'Designation'),
-            'c_cellno' => Yii::t('app', 'Contact Number'),
-            'c_branch' => Yii::t('app', 'Branch'),
-            'c_roleid' => Yii::t('app', 'Role Id'),
-            'c_active' => Yii::t('app', 'Active'),
-            'c_status' => Yii::t('app', 'Status'),
-            'c_expdate' => Yii::t('app', 'Expiry date'),
-            'inserttime' => Yii::t('app', 'Insert Time'),
-            'updatetime' => Yii::t('app', 'Update Time'),
-            'insertuser' => Yii::t('app', 'Insert User'),
-            'updateuser' => Yii::t('app', 'Update User'),
+            'name' => Yii::t('app', 'Name'),
+            'designation' => Yii::t('app', 'Designation'),
+            'cell_number' => Yii::t('app', 'Cell Number'),
+            'branch_code' => Yii::t('app', 'Branch Code'),
+            'c_roleid' => Yii::t('app', 'Role Assign'),
+            'c_active' => Yii::t('app', ' Active'),
+            'c_status' => Yii::t('app', ' Status'),
+            'c_expdate' => Yii::t('app', ' Expdate'),
+            'business_id' => Yii::t('app', 'Business Name'),
+            'inserttime' => Yii::t('app', 'Inserttime'),
+            'updatetime' => Yii::t('app', 'Updatetime'),
+            'insertuser' => Yii::t('app', 'Insertuser'),
+            'updateuser' => Yii::t('app', 'Updateuser'),
         ];
+    }
+
+
+
+    public function getRolehd()
+    {
+        return $this->hasOne(Rolehd::className(), ['id' => 'c_roleid']);
+    }
+
+    public function getBusiness()
+    {
+        return $this->hasOne(Business::className(), ['id' => 'business_id']);
     }
 
 
@@ -149,16 +167,21 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
+    /* public function beforeSave($insert)
+     {
+         if(parent::beforeSave($insert)){
+             if($insert){
+                 $this->password = Security::generatePasswordHash($this->password);
+             }
+             return true;
+         }else{
+             return false;
+         }
+     }*/
+
     public function beforeSave($insert)
     {
-        if(parent::beforeSave($insert)){
-            if($insert){
-                $this->password = Security::generatePasswordHash($this->password);
-            }
-            return true;
-        }else{
-            return false;
-        }
+        return $this->password = Security::generatePasswordHash($this->password);
     }
 
     /**

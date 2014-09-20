@@ -24,7 +24,10 @@ use app\models\Menupanel;
         'Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MENU'])->all(), 'id', 'c_name'),
         'Sub-Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'SUBM'])->all(), 'id', 'c_name')], ['prompt'=>'- please select -'])->hint('Please select menu item')->label('Menu Item') ?>
 
-    <?= $form->field($model, 'c_parentid')->dropDownList(ArrayHelper::map(Rolehd::find()->all(), 'id', 'c_name'), ['prompt'=>'- please select -'])->hint('Please select parent')->label('Parent ID') ?>
+    <?= $form->field($model, 'c_parentid')->dropDownList([
+        'Module'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MODU'])->all(), 'id', 'c_name'),
+        'Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MENU'])->all(), 'id', 'c_name'),
+        'Sub-Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'SUBM'])->all(), 'id', 'c_name')], ['prompt'=>'- please select -'])->hint('Please select parent')->label('Parent Menu ID') ?>
 
     <?php // $form->field($model, 'inserttime')->hiddenInput() ?>
     <?php // $form->field($model, 'updatetime')->hiddenInput() ?>

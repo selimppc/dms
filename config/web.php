@@ -17,7 +17,7 @@ $config = [
             //'showScriptName' => false,
 
             // Disable r= routes
-            'enablePrettyUrl' => true
+            //'enablePrettyUrl' => true
         ],
 
         // Caching
