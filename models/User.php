@@ -17,6 +17,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public $Rolehd;
     public $Business;
 
+    //Reset Password
+    public $old_password;
+    public $new_password;
+    public $repeat_password;
+
     /**
      * @inheritdoc
      */
@@ -42,8 +47,36 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['name'], 'string', 'max' => 100],
             [['cell_number'], 'string', 'max' => 15],
 
+            [['new_password', 'repeat_password', 'old_password'], 'required', 'on' => ['resetPw'] ],
+            ['old_password', 'checkOldPassword', 'on' => ['resetPw']],
+            ['repeat_password', 'compare', 'compareAttribute'=>'new_password', 'on'=>['resetPw']],
+
         ];
     }
+
+        //matching the old password with your existing password.
+        public function checkOldPassword($attribute)
+        {
+            if(!Security::validatePassword($this->$attribute, $this->password)){
+                $this->addError($attribute, 'Old password is incorrect.');
+            }
+        }
+
+        /*public function checkOldPassword($attribute, $params)
+        {
+            $hash = Security::generatePasswordHash($this->$attribute);
+            if(Security::validatePassword($this->password, $hash) == NULL ){
+                echo "NO";
+            }else{
+                echo "OK";
+            }
+            exit();
+
+            $this->addError($attribute, 'Old password is incorrect.');
+
+        }*/
+
+
 
     /**
      * @inheritdoc
@@ -70,7 +103,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'updateuser' => Yii::t('app', 'Updateuser'),
         ];
     }
-
 
 
     public function getRolehd()
@@ -110,7 +142,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        //return static::findOne(['c_logid' => $username]);
         return static::find()
             ->where([
                 'username' => $username,
@@ -118,6 +149,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
                 'c_status'=>'1'])
             ->andWhere('c_expdate > NOW()')
             ->one();
+
+        //return static::findOne(['username' => $username]);
     }
 
     /**
@@ -138,8 +171,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            //'status' => self::STATUS_ACTIVE,
         ]);
+
     }
 
     /**
@@ -167,21 +201,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    /* public function beforeSave($insert)
-     {
-         if(parent::beforeSave($insert)){
-             if($insert){
-                 $this->password = Security::generatePasswordHash($this->password);
-             }
-             return true;
-         }else{
-             return false;
-         }
-     }*/
-
     public function beforeSave($insert)
     {
-        return $this->password = Security::generatePasswordHash($this->password);
+        if(parent::beforeSave($insert)){
+            if($this->scenario == 'resetPw'){
+                $this->password = Security::generatePasswordHash($this->new_password);
+            }else{
+                $this->password = Security::generatePasswordHash($this->password);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -192,10 +222,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        //return $this->password === sha1($password);
+        //return $this->password = sha1($password);
         //return $this->password=md5($this->password);
-
-        return $this->password=Security::generatePasswordHash($this->password);
+        return Security::validatePassword($password, $this->password);
     }
 
 
@@ -204,6 +233,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      *
      * @param string $password
      */
+    public function setPassword($password)
+    {
+        $this->password = Security::generatePasswordHash($password);
+    }
 
 
     /**

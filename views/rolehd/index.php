@@ -5,6 +5,7 @@ use yii\grid\GridView;
 use yii\data\ActiveDataProvider;
 use app\models\Rolehd;
 use yii\grid\DataColumn;
+use yii\bootstrap\Alert;
 
 /**
  * @var yii\web\View $this
@@ -15,6 +16,16 @@ use yii\grid\DataColumn;
 $this->title = Yii::t('app', 'Role Header');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+
+if($flash = Yii::$app->session->getFlash('success')){
+    echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $flash]);
+}elseif($flash = Yii::$app->session->getFlash('error')){
+    echo Alert::widget(['options' => ['class' => 'alert-error'], 'body' => $flash]);
+}
+?>
+
+
 <div class="rolehd-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

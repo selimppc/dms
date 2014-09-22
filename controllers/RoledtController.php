@@ -3,11 +3,14 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Roledt;
+use app\models\Menupanel;
 use app\models\RoledtSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * RoledtController implements the CRUD actions for Roledt model.
@@ -17,10 +20,15 @@ class RoledtController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index', 'create', 'view', 'update', 'delete'],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create',  'view', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
         ];
@@ -63,6 +71,7 @@ class RoledtController extends Controller
         $model = new Roledt;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Data saved successfully !');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -82,6 +91,7 @@ class RoledtController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Data updated successfully !');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -99,7 +109,7 @@ class RoledtController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->getSession()->setFlash('success', 'Data deleted successfully !');
         return $this->redirect(['index']);
     }
 
@@ -118,4 +128,28 @@ class RoledtController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+    public function actionMenuItem($id){
+        $countMenu = Menupanel::find()
+            ->where(['c_parentid' => $id])
+            ->count();
+
+        $menuItem = Menupanel::find()
+            ->where(['c_parentid' => $id])
+            ->orderBy('id ASC')
+            ->all();
+
+        if($countMenu>0){
+            foreach($menuItem as $post){
+                echo "<option value='".$post->id."'>".$post->c_name."</option>";
+            }
+        }
+        else{
+            echo "<option>- Nothing Found -</option>";
+        }
+
+    }
+
+
 }

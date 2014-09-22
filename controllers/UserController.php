@@ -3,13 +3,16 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
 use app\models\Z_user;
 use app\models\User;
 use app\models\UserSearch;
+use yii\helpers\Security;
 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -19,12 +22,18 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout', 'create', 'index', 'view', 'update', 'delete', 'ResetPassword'],
+                'rules' => [
+                    [
+                        'actions' => ['logout', 'create', 'index', 'view', 'update', 'delete', 'ResetPassword'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
+
         ];
     }
 
@@ -65,6 +74,7 @@ class UserController extends Controller
         $model = new User();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Data saved successfully !');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -84,12 +94,37 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Data updated successfully !');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+    }
+
+
+    public function actionResetPassword()
+    {
+        $id = Yii::$app->user->id;
+        $model = User::findOne(['id'=>$id]);
+        $model->setScenario('resetPw');
+
+        if ($model->load(Yii::$app->request->post())) {
+
+                if($model->save()){
+                    Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+                    Yii::$app->getSession()->setFlash('error', 'Incorrect old password.');
+                    return $this->redirect(['reset-password']);
+                }
+        }else {
+            return $this->render('reset_password', [
+                'model' => $model,
+            ]);
+        }
+
     }
 
     /**
@@ -101,7 +136,7 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->getSession()->setFlash('success', 'Data deleted successfully !');
         return $this->redirect(['index']);
     }
 

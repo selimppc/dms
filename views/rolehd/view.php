@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Rolehd;
+use app\models\Roledt;
+use yii\bootstrap\Alert;
 
 /**
  * @var yii\web\View $this
@@ -12,6 +15,16 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Role Header'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php
+
+if($flash = Yii::$app->session->getFlash('success')){
+    echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $flash]);
+}elseif($flash = Yii::$app->session->getFlash('error')){
+    echo Alert::widget(['options' => ['class' => 'alert-error'], 'body' => $flash]);
+}
+?>
+
+
 <div class="rolehd-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -33,7 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'c_name',
             'c_desc',
-            'c_active',
+            [
+                'attribute'=> 'c_active',
+                'value' => $model->c_active,
+            ],
 
         ],
     ]) ?>

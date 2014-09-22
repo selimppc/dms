@@ -38,7 +38,7 @@ class Roledt extends \yii\db\ActiveRecord
     {
         return [
             [['c_id', 'c_menuid', 'c_parentid'], 'integer'],
-            [['c_menuid'], 'required'],
+            [['c_id', 'c_menuid', 'c_parentid'], 'required'],
             [['inserttime', 'updatetime', 'Rolehd', 'Menupanel', 'Menuparentid'], 'safe'],
             [['insertuser', 'updateuser'], 'string', 'max' => 50],
             [['c_id', 'c_menuid'], 'unique', 'targetAttribute' => ['c_id', 'c_menuid'], 'message' => 'The combination of C ID and C Menuid has already been taken.']
