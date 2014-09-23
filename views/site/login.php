@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\bootstrap\Alert;
 /**
  * @var yii\web\View $this
  * @var yii\widgets\ActiveForm $form
@@ -10,6 +10,16 @@ use yii\widgets\ActiveForm;
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
+<?php
+if($flash = Yii::$app->session->getFlash('success')){
+    echo Alert::widget(['options' => ['class' => 'alert-success'], 'body' => $flash]);
+}elseif($flash = Yii::$app->session->getFlash('error')){
+    echo Alert::widget(['options' => ['class' => 'alert-error'], 'body' => $flash]);
+}
+?>
+
+
 <div class="site-login">
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -40,8 +50,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
+
 </div>

@@ -31,6 +31,7 @@ class UserController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+
                 ],
             ],
 
@@ -119,6 +120,28 @@ class UserController extends Controller
                     Yii::$app->getSession()->setFlash('error', 'Incorrect old password.');
                     return $this->redirect(['reset-password']);
                 }
+        }else {
+            return $this->render('reset_password', [
+                'model' => $model,
+            ]);
+        }
+
+    }
+
+    public function actionNewUser($id)
+    {
+        $model = User::findOne(['id'=>$id]);
+        $model->setScenario('resetNew');
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->c_active = '1';
+            if($model->save()){
+                Yii::$app->getSession()->setFlash('success', 'New password was saved.');
+                return $this->redirect(['new-user', 'id' => $id]);
+            }else{
+                Yii::$app->getSession()->setFlash('error', 'Incorrect old password.');
+                return $this->redirect(['new-user', 'id' => $id]);
+            }
         }else {
             return $this->render('reset_password', [
                 'model' => $model,

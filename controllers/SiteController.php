@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\User;
 
 class SiteController extends Controller
 {
@@ -59,8 +60,24 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        //if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        //    return $this->goBack();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $users_name = $model->username;
+            $active_id = User::find()->where(['username' => $users_name])->one();
+            if($active_id['c_active'] === 1){
+                if($model->login()){
+                    return $this->goBack();
+                }else{
+                    Yii::$app->getSession()->setFlash('error', 'Incorrect username / password. Please try again !');
+                    return $this->redirect(['site/login']);
+                }
+            }elseif($active_id['c_active'] === 0){
+                $id = $active_id['id'];
+                return $this->redirect(['user/new-user', 'id' => $id]);
+            }
+
         } else {
             return $this->render('login', [
                 'model' => $model,
@@ -93,4 +110,6 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+
 }

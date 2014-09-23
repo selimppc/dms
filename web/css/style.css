@@ -53,3 +53,7 @@
 div #yii-debug-toolbar-min{
     display: none;
 }
+
+.alert-error{
+    background-color: #FFFFA8;
+}

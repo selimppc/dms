@@ -48,9 +48,11 @@ use yii\jui\DatePicker;
 
         ]) ?>
 
-    <?= $form->field($model, 'c_active')->input('c_active')->dropDownList(['1'=>'Active', '0'=>'No Activity'],['prompt'=>'- please select -'])->hint('Please select activity status')->label('Activity ') ?>
-    <?= $form->field($model, 'c_status')->input('c_status')->dropDownList(['1'=>'Open', '0'=>'Close'],['prompt'=>'- please select -'])->hint('Please select status')->label('Status') ?>
+    <?php //$form->field($model, 'c_active')->input('c_active')->dropDownList(['1'=>'Active', '0'=>'No Activity'],['prompt'=>'- please select -'])->hint('Please select activity status')->label('Activity ') ?>
+    <?php //$form->field($model, 'c_status')->input('c_status')->dropDownList(['1'=>'Open', '0'=>'Close'],['prompt'=>'- please select -'])->hint('Please select status')->label('Status') ?>
 
+    <?= $form->field($model, 'c_active')->hiddenInput(['value'=>'0'])->label(''); ?>
+    <?= $form->field($model, 'c_status')->hiddenInput(['value'=>'1'])->label(''); ?>
 
 
 

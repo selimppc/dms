@@ -42,3 +42,13 @@ $this->title = 'iTabps ERP ';
 
     </div>
 </div>
+<?php
+
+$a =3;
+$cat = 0;
+
+echo Yii::t('app', 'You are {n} in line, please hold..', ['n'=>$a])."<br>";
+echo Yii::t('app', 'There {n, plural, =0{are no cats} =1{is one cat} other{are # cats}}!', ['n' => $cat]);
+
+?>
+<br> <br>
