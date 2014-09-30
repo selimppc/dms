@@ -8,6 +8,7 @@ use app\models\Vw_role;
 use app\assets\AppAsset;
 
 
+
 class MenuHelper
 {
 
@@ -26,6 +27,7 @@ class MenuHelper
         $items = Vw_role::find()
             ->where(['c_parentid' => $role_id])
             ->andWhere(['id' => $user_id])
+            ->orderBy(['c_name'=> 'ASC'])
             ->asArray()
             ->all();
 

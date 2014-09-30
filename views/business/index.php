@@ -52,12 +52,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'fax_number',
              'url:url',
              'logo',
-            // 'inserttime',
-            // 'insertuser',
-            // 'updatetime',
-            // 'updateuser',
 
-            ['class' => 'yii\grid\ActionColumn'],
+
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=>'Action',
+                'template'=>'{view}{update}',
+            ],
         ],
     ]); ?>
 

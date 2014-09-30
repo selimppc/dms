@@ -6,6 +6,10 @@ use yii\data\ActiveDataProvider;
 use app\models\Rolehd;
 use yii\grid\DataColumn;
 use yii\bootstrap\Alert;
+use yii\bootstrap\Modal;
+
+
+
 
 /**
  * @var yii\web\View $this
@@ -13,7 +17,7 @@ use yii\bootstrap\Alert;
  * @var app\models\RolehdSearch $searchModel
  */
 
-$this->title = Yii::t('app', 'Role Header');
+$this->title = Yii::t('app', 'Role Setup');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php
@@ -34,6 +38,8 @@ if($flash = Yii::$app->session->getFlash('success')){
 
     <p>
         <?= Html::a(Yii::t('app', 'Create {modelClass}', ['modelClass' => 'Role Header',]), ['create'], ['class' => 'btn btn-success']) ?>
+
+
     </p>
 
     <?= GridView::widget([
@@ -57,8 +63,13 @@ if($flash = Yii::$app->session->getFlash('success')){
             ],
 
 
-            ['class' => 'yii\grid\ActionColumn',
+            [
+                'class' => 'yii\grid\ActionColumn',
                 'header'=>'Action',
+                'template'=>'{view}{update}',
+                'buttons' => [
+
+                ],
             ],
 
 
@@ -66,3 +77,6 @@ if($flash = Yii::$app->session->getFlash('success')){
     ]); ?>
 
 </div>
+
+
+

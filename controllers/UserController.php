@@ -136,8 +136,8 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->c_active = '1';
             if($model->save()){
-                Yii::$app->getSession()->setFlash('success', 'New password was saved.');
-                return $this->redirect(['new-user', 'id' => $id]);
+                Yii::$app->getSession()->setFlash('success', 'New password was saved. You may Login Now!');
+                return $this->redirect(['site/login']);
             }else{
                 Yii::$app->getSession()->setFlash('error', 'Incorrect old password.');
                 return $this->redirect(['new-user', 'id' => $id]);
@@ -161,6 +161,21 @@ class UserController extends Controller
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', 'Data deleted successfully !');
         return $this->redirect(['index']);
+    }
+
+    public function actionInactive($id)
+    {
+        if ($id !== NULL) {
+            $connection = \Yii::$app->db;
+            $command = $connection->createCommand('UPDATE z_user SET c_status=0 WHERE id= :id ');
+            $command->bindParam(':id', $id);
+            $command->execute();
+
+            Yii::$app->getSession()->setFlash('success', 'User Deactivated successfully !');
+            return $this->redirect(['index']);
+        } else {
+            return $this->redirect(['index']);
+        }
     }
 
     /**

@@ -47,9 +47,12 @@ if($flash = Yii::$app->session->getFlash('success')){
             'c_redirect',
             // 'c_parentid',
             // 'c_sortord',
-            // 'inserttime',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=>'Action',
+                'template'=>'{view}{update}',
+            ],
         ],
     ]); ?>
 

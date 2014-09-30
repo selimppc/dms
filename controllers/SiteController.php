@@ -65,17 +65,30 @@ class SiteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $users_name = $model->username;
-            $active_id = User::find()->where(['username' => $users_name])->one();
-            if($active_id['c_active'] === 1){
-                if($model->login()){
-                    return $this->goBack();
-                }else{
-                    Yii::$app->getSession()->setFlash('error', 'Incorrect username / password. Please try again !');
-                    return $this->redirect(['site/login']);
+
+            // use right varibale
+            $user = User::find()->where(['username' => $users_name])->one();
+
+            if ($user !== null) { // ensure username exists
+                if ($user['c_active'] === 1) { // or $user->c_active
+                    if ($model->login()) {
+                        return $this->goBack();
+                    } else {
+                        Yii::$app->getSession()->setFlash('error', 'Incorrect username / password. Please try again !');
+                        return $this->redirect(['site/login']);
+                    }
+                } elseif ($user['c_active'] === 0) {
+                    if ($user->validatePassword($model->password)) { // check password here
+                        $id = $user['id'];
+                        return $this->redirect(['user/new-user', 'id' => $id]);
+                    } else {
+                        Yii::$app->getSession()->setFlash('error', 'Incorrect username / password. Please try again !');
+                        return $this->redirect(['site/login']);
+                    }
                 }
-            }elseif($active_id['c_active'] === 0){
-                $id = $active_id['id'];
-                return $this->redirect(['user/new-user', 'id' => $id]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Username dosnt exists !');
+                return $this->redirect(['site/login']);
             }
 
         } else {
@@ -108,6 +121,7 @@ class SiteController extends Controller
 
     public function actionAbout()
     {
+
         return $this->render('about');
     }
 

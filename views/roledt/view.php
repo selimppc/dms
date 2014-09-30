@@ -38,6 +38,8 @@ if($flash = Yii::$app->session->getFlash('success')){
         ]) ?>
     </p>
 
+
+    <h2> </h2>
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [

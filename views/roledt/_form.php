@@ -19,7 +19,7 @@ use app\models\Menupanel;
 
     <?= $form->field($model, 'c_id')->dropDownList(ArrayHelper::map(Rolehd::find()->all(), 'id', 'c_name'), ['prompt'=>'- please select -'])->hint('Please select role header')->label('Role Headers')  ?>
 
-    <?= $form->field($model, 'c_parentid')->dropDownList([
+    <?= $form->field($model, 'c_menuid')->dropDownList([
         'Module'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MODU'])->all(), 'id', 'c_name'),
         'Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MENU'])->all(), 'id', 'c_name'),
         'Sub-Menu'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'SUBM'])->all(), 'id', 'c_name')],
@@ -28,12 +28,12 @@ use app\models\Menupanel;
             'onchange'=>'
                         $.post( "'.Yii::$app->urlManager->createUrl('/roledt/menu-item&id=').'"+$(this).val(),
                             function( data ) {
-                              $( "#'.Html::getInputId($model, 'c_menuid').'" ).html( data );
+                              $( "#'.Html::getInputId($model, 'c_parentid').'" ).html( data );
                             });
-                    '])->hint('Please select parent menu')->label('Parent Menu ID'); ?>
+                    '])->hint('Please select menu/module ')->label('Menu / Module'); ?>
 
-    <?= $form->field($model, 'c_menuid')->dropDownList(
-        ['prompt'=>'- please select -'])->hint('Please select menu item')->label('Menu Item') ?>
+    <?= $form->field($model, 'c_parentid')->dropDownList(
+        ['prompt'=>'- please select -'])->hint('Please select parent item')->label('Parent Menu') ?>
 
 
 

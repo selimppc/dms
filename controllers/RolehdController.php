@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Roledt;
+use app\models\RoledtSearch;
 use yii\filters\AccessControl;
 use app\models\Rolehd;
 use app\models\RolehdSearch;
@@ -38,12 +40,14 @@ class RolehdController extends Controller
      */
     public function actionIndex()
     {
+        $model = new Rolehd;
         $searchModel = new RolehdSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
+            'model' => $model,
         ]);
     }
 
@@ -54,9 +58,27 @@ class RolehdController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        $model = $this->findModel($id);
+
+        $model1= new Roledt;
+        $searchModel1 = new RoledtSearch();
+        $dataProvider = $searchModel1->searchDt(['RoledtSearch'=>['c_id'=>$id]]);
+
+
+        if ($model1->load(Yii::$app->request->post()) && $model1->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Data saved successfully !');
+            return $this->redirect(['view', 'id' => $model->id]);
+
+        } else {
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'model1' =>$model1,
+                'dataProvider'=> $dataProvider,
+                'searchModel1'=>$searchModel1,
+            ]);
+        }
+
+
     }
 
     /**

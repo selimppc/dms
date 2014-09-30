@@ -137,9 +137,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
                 'username' => $username,
                 'c_active'=>'1',
                 'c_status'=>'1'])
-            ->andWhere('c_expdate > NOW()')
+            //->andWhere('c_expdate > NOW()')
             ->one();
-
     }
 
     /**

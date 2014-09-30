@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use Yii;
+use app\models\Rolehd;
 use yii\filters\AccessControl;
 use app\models\Roledt;
 use app\models\Menupanel;
@@ -74,7 +75,7 @@ class RoledtController extends Controller
             Yii::$app->getSession()->setFlash('success', 'Data saved successfully !');
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('create', [
+            return $this->renderAjax('create', [
                 'model' => $model,
             ]);
         }
@@ -110,7 +111,8 @@ class RoledtController extends Controller
     {
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', 'Data deleted successfully !');
-        return $this->redirect(['index']);
+        return $this->redirect(['rolehd/index']);
+       // return $this->redirect(Yii::$app->user->getReturnUrl());
     }
 
     /**
@@ -132,21 +134,37 @@ class RoledtController extends Controller
 
     public function actionMenuItem($id){
         $countMenu = Menupanel::find()
-            ->where(['c_parentid' => $id])
+            ->where(['id' => $id])
             ->count();
 
+        $parentMenu = Menupanel::find()
+            ->where(['id' => $id])
+            ->one();
+        $parentID = $parentMenu->c_parentid;
+        $menuType = $parentMenu->c_type;
+
         $menuItem = Menupanel::find()
-            ->where(['c_parentid' => $id])
+            ->where(['id' => $parentID])
             ->orderBy('id ASC')
             ->all();
 
+        $roleHd= Rolehd::find()
+            ->orderBy('c_name ASC')
+            ->all();
+
         if($countMenu>0){
-            foreach($menuItem as $post){
-                echo "<option value='".$post->id."'>".$post->c_name."</option>";
+            if($menuType == 'MODU'){
+                foreach($roleHd as $post){
+                    echo "<option value='".$post->id."'>".$post->c_name."</option>";
+                }
+            }else{
+                foreach($menuItem as $post){
+                    echo "<option value='".$post->id."'>".$post->c_name."</option>";
+                }
             }
         }
         else{
-            echo "<option>- Nothing Found -</option>";
+            echo "<option> - Nothing Found - </option>";
         }
 
     }

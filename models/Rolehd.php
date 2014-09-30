@@ -63,10 +63,12 @@ class Rolehd extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getZRoledts()
+    public function getRolehd()
     {
-        return $this->hasMany(ZRoledt::className(), ['c_id' => 'id']);
+        return $this->hasOne(Rolehd::className(), ['id' => 'id']);
     }
+
+
 
 
 }

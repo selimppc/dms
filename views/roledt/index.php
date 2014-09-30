@@ -30,9 +30,8 @@ if($flash = Yii::$app->session->getFlash('success')){
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create {modelClass}', [
-  'modelClass' => 'Role Detail',
-]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'Create {modelClass}', ['modelClass' => 'Role Detail',]), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', '<< Back to {modelClass}', ['modelClass' => 'Role Setup',]), ['rolehd/index'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -58,7 +57,11 @@ if($flash = Yii::$app->session->getFlash('success')){
             //'c_menuid',
             //'c_parentid',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=>'Action',
+                'template'=>'{view}{update}',
+            ],
         ],
     ]); ?>
 
