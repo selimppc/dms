@@ -41,6 +41,8 @@ if($flash = Yii::$app->session->getFlash('success')){
             ],
         ]) */ ?>
 
+
+
         <?php Modal::begin([
             'id' => 'modal',
             'header' => '<h4>Add New Role Detail</h4>',
@@ -49,7 +51,7 @@ if($flash = Yii::$app->session->getFlash('success')){
         ]); ?>
 
         <?= $this->render('//roledt/_form', [
-            'model' => $model1,
+            'model' => $model1, 'id'=> $model->id,
         ]) ?>
 
         <?php
@@ -113,7 +115,7 @@ if($flash = Yii::$app->session->getFlash('success')){
             ],
             'urlCreator' => function ($action, $model, $key, $index) {
                 if ($action === 'delete') {
-                    $url = Yii::t('app', ['roledt/delete', 'id'=>$model->id]);  // your own url generation logic
+                    $url = Yii::t('app', ['roledt/delete', 'id'=>$model->id, 'c_id'=>$model->c_id]);  // your own url generation logic
                     return $url;
                 }
             }

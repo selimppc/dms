@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Codesparam;
-use app\models\CodesparamSearch;
+use app\models\Trnparam;
+use app\models\TrnparamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CodesparamController implements the CRUD actions for Codesparam model.
+ * TrnparamController implements the CRUD actions for Trnparam model.
  */
-class CodesparamController extends Controller
+class TrnparamController extends Controller
 {
     public function behaviors()
     {
@@ -27,12 +27,12 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Lists all Codesparam models.
+     * Lists all Trnparam models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CodesparamSearch;
+        $searchModel = new TrnparamSearch;
         $dataProvider = $searchModel->search(Yii::$app->request->getQueryParams());
 
         return $this->render('index', [
@@ -42,7 +42,7 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Displays a single Codesparam model.
+     * Displays a single Trnparam model.
      * @param integer $id
      * @return mixed
      */
@@ -54,18 +54,19 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Creates a new Codesparam model.
+     * Creates a new Trnparam model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Codesparam;
-        $pageTitle = 'New Settings for codesparam';
+        $model = new Trnparam;
+        $pageTitle = 'New Transaction Settings';
 
         $model->TYPE = "Hello";
         $model->CODE = "CODE";
         $model->ip_address = getHostByName(getHostName());
+        $model->increment = "1";
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -78,7 +79,7 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Updates an existing Codesparam model.
+     * Updates an existing Trnparam model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -97,7 +98,7 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Deletes an existing Codesparam model.
+     * Deletes an existing Trnparam model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +111,15 @@ class CodesparamController extends Controller
     }
 
     /**
-     * Finds the Codesparam model based on its primary key value.
+     * Finds the Trnparam model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Codesparam the loaded model
+     * @return Trnparam the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Codesparam::findOne($id)) !== null) {
+        if (($model = Trnparam::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

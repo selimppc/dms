@@ -107,12 +107,11 @@ class RoledtController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $c_id)
     {
         $this->findModel($id)->delete();
         Yii::$app->getSession()->setFlash('success', 'Data deleted successfully !');
-        return $this->redirect(['rolehd/index']);
-       // return $this->redirect(Yii::$app->user->getReturnUrl());
+        return $this->redirect(['rolehd/view', 'id'=>$c_id]);
     }
 
     /**

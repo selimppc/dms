@@ -17,7 +17,7 @@ use app\models\Menupanel;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'c_id')->dropDownList(ArrayHelper::map(Rolehd::find()->all(), 'id', 'c_name'), ['prompt'=>'- please select -'])->hint('Please select role header')->label('Role Headers')  ?>
+    <?= $form->field($model, 'c_id')->dropDownList(ArrayHelper::map(Rolehd::find()->where(['id'=>$id])->all(), 'id', 'c_name'))->hint('Please select role header')->label('Role Headers')  ?>
 
     <?= $form->field($model, 'c_menuid')->dropDownList([
         'Module'=> ArrayHelper::map(Menupanel::find()->where(['c_type' => 'MODU'])->all(), 'id', 'c_name'),

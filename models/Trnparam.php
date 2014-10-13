@@ -5,21 +5,16 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "ad_codesparam".
+ * This is the model class for table "ad_trnparam".
  *
  * @property integer $id
  * @property string $TYPE
  * @property string $CODE
- * @property string $description
  * @property string $branch_code
- * @property string $credit_account
- * @property string $debit_account
- * @property string $discount_acount
- * @property string $tax_account
- * @property string $return_account
- * @property string $tax_rate
- * @property string $properties
- * @property string $percentage
+ * @property string $description
+ * @property integer $ACTION
+ * @property integer $last_number
+ * @property integer $increment
  * @property integer $active
  * @property string $ip_address
  * @property string $insert_time
@@ -30,14 +25,14 @@ use Yii;
  *
  * @property ZBusiness $business
  */
-class Codesparam extends \yii\db\ActiveRecord
+class Trnparam extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'ad_codesparam';
+        return 'ad_trnparam';
     }
 
     /**
@@ -47,11 +42,11 @@ class Codesparam extends \yii\db\ActiveRecord
     {
         return [
             [['TYPE', 'CODE', 'business_id'], 'required'],
-            [['tax_rate', 'percentage'], 'number'],
-            [['active'], 'integer'],
+            [['ACTION', 'last_number', 'increment', 'active', 'business_id'], 'integer'],
             [['insert_time', 'update_time'], 'safe'],
-            [['TYPE', 'CODE', 'branch_code', 'credit_account', 'debit_account', 'discount_acount', 'tax_account', 'return_account', 'properties', 'insert_user', 'update_user'], 'string', 'max' => 50],
-            [['description'], 'string', 'max' => 150],
+            [['TYPE', 'branch_code', 'insert_user', 'update_user'], 'string', 'max' => 50],
+            [['CODE'], 'string', 'max' => 4],
+            [['description'], 'string', 'max' => 100],
             [['ip_address'], 'string', 'max' => 20],
             [['TYPE', 'CODE'], 'unique', 'targetAttribute' => ['TYPE', 'CODE'], 'message' => 'The combination of Type and Code has already been taken.']
         ];
@@ -66,16 +61,11 @@ class Codesparam extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'TYPE' => Yii::t('app', 'Type'),
             'CODE' => Yii::t('app', 'Code'),
-            'description' => Yii::t('app', 'Description'),
             'branch_code' => Yii::t('app', 'Branch Code'),
-            'credit_account' => Yii::t('app', 'Credit Account'),
-            'debit_account' => Yii::t('app', 'Debit Account'),
-            'discount_acount' => Yii::t('app', 'Discount Acount'),
-            'tax_account' => Yii::t('app', 'Tax Account'),
-            'return_account' => Yii::t('app', 'Return Account'),
-            'tax_rate' => Yii::t('app', 'Tax Rate'),
-            'properties' => Yii::t('app', 'Properties'),
-            'percentage' => Yii::t('app', 'Percentage'),
+            'description' => Yii::t('app', 'Description'),
+            'ACTION' => Yii::t('app', 'Action'),
+            'last_number' => Yii::t('app', 'Last Number'),
+            'increment' => Yii::t('app', 'Increment'),
             'active' => Yii::t('app', 'Active'),
             'ip_address' => Yii::t('app', 'Ip Address'),
             'insert_time' => Yii::t('app', 'Insert Time'),
