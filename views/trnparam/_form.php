@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Business;
+use app\models\Branchmaster;
 
 /**
  * @var yii\web\View $this
@@ -18,23 +19,27 @@ use app\models\Business;
 
     <?= $form->field($model, 'TYPE')->input('TYPE', ['readonly' => true]) ?>
 
-    <?= $form->field($model, 'CODE')->input('CODE', ['readonly' => true]) ?>
+    <?= $form->field($model, 'CODE')->input('CODE')->hint('Please enter code') ?>
 
-    <?= $form->field($model, 'branch_code')->input('branch_code') ?>
+    <?= $form->field($model, 'description')->input('description')->hint('Please enter description') ?>
 
-    <?= $form->field($model, 'description')->input('description') ?>
+    <?= $form->field($model, 'branch_code')->dropDownList(ArrayHelper::map(Branchmaster::find()->all(), 'branch_code', 'branch_name'), ['prompt'=>'- please select -'])->hint('Please select branch') ?>
 
-    <?= $form->field($model, 'ACTION')->input('ACTION') ?>
 
-    <?= $form->field($model, 'last_number')->input('last_number') ?>
 
-    <?= $form->field($model, 'increment')->input('increment', ['readonly' => true]) ?>
+    <?= $form->field($model, 'ACTION')->input('ACTION')->hint('Please enter action') ?>
+
+    <?= $form->field($model, 'last_number')->input('last_number')->hint('Please enter last number') ?>
+
+    <?= $form->field($model, 'increment')->input('increment', ['readonly' => true])->hint('Please enter increment') ?>
+
+    <?= $form->field($model, 'business_id')->dropDownList(ArrayHelper::map(Business::find()->all(), 'id', 'company_name'), ['prompt'=>'- please select -'])->hint('Please select Business Name')->label('Business Name') ?>
 
     <?= $form->field($model, 'active')->dropDownList(['1'=>'Active', '0'=>'Inactive'], ['prompt'=>'- please select -'])->hint('Please enter active')->label('Active') ?>
 
     <?= $form->field($model, 'ip_address')->input('ip_address', ['readonly' => true]) ?>
 
-    <?= $form->field($model, 'business_id')->dropDownList(ArrayHelper::map(Business::find()->all(), 'id', 'company_name'), ['prompt'=>'- please select -'])->hint('Please enter Business Name')->label('Business Name') ?>
+
 
 
 

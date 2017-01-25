@@ -20,7 +20,7 @@ class TrnparamController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['post'],
+                    //'delete' => ['post'],
                 ],
             ],
         ];
@@ -65,8 +65,9 @@ class TrnparamController extends Controller
 
         $model->TYPE = "Hello";
         $model->CODE = "CODE";
-        $model->ip_address = getHostByName(getHostName());
+        $model->last_number = "0";
         $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -77,6 +78,281 @@ class TrnparamController extends Controller
             ]);
         }
     }
+
+    /*
+     * =============================================
+     * Voucher Transaction Number
+     * =============================================
+     */
+
+    public function actionVoucherTransactionNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Voucher TRN NO';
+
+        $model->TYPE = "Voucher TRN No";
+        $model->CODE = "TRN";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * Requisition Number
+     * =============================================
+     */
+
+    public function actionRequisitionNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Requisition Number';
+
+        $model->TYPE = "Requisition Number";
+        $model->CODE = "REQ";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * Purchase Order Number
+     * =============================================
+     */
+
+    public function actionPurchaseOrderNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Purchase Order Number';
+
+        $model->TYPE = "Purchase Order Number";
+        $model->CODE = "PO--";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * Invoice Number
+     * =============================================
+     */
+
+    public function actionInvoiceNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Invoice Number';
+
+        $model->TYPE = "Invoice Number";
+        $model->CODE = "INV-";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * Sales Return Number
+     * =============================================
+     */
+
+    public function actionSalesReturnNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Sales Return Number';
+
+        $model->TYPE = "Sales Return Number";
+        $model->CODE = "SR--";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * Money Receipt Number
+     * =============================================
+     */
+
+    public function actionMoneyReceiptNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New Money Receipt Number';
+
+        $model->TYPE = "Money Receipt Number";
+        $model->CODE = "MR--";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * GRN Number Setup
+     * =============================================
+     */
+    public function actionGrnNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New GRN Number Setup';
+
+        $model->TYPE = "GRN Number";
+        $model->CODE = "GRN-";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+    /*
+     * =============================================
+     * IM Transaction
+     * =============================================
+     */
+    public function actionImTransactionNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New IM Transaction';
+
+        $model->TYPE = "IM Transaction";
+        $model->CODE = "IMTRN";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * =============================================
+     * IM Transfer Number
+     * =============================================
+     */
+    public function actionImTransferNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New IM Transfer Number';
+
+        $model->TYPE = "IM Transfer";
+        $model->CODE = "IMTRF";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+    /*
+     * =============================================
+     * IM Adjustment Transaction Number
+     * =============================================
+     */
+    public function actionImAdjustmentTransactionNumber()
+    {
+        $model = new Trnparam;
+        $pageTitle = 'New IM Adjustment Transaction Number';
+
+        $model->TYPE = "IM Adjustment Transaction";
+        $model->CODE = "ADJ-";
+        $model->last_number = "0";
+        $model->increment = "1";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
 
     /**
      * Updates an existing Trnparam model.

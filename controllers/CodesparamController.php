@@ -77,6 +77,161 @@ class CodesparamController extends Controller
         }
     }
 
+    /*
+     * ==================================================
+     * Product Class
+     * ==================================================
+     */
+
+    public function actionProductClass()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Product Class';
+
+        $model->TYPE = "Product Class";
+        $model->CODE = "PRODUCT";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * ==================================================
+     * Product Group
+     * ==================================================
+     */
+
+    public function actionProductGroup()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Product Group';
+
+        $model->TYPE = "Product Group";
+        $model->CODE = "GROUP";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+    /*
+     * ==================================================
+     * Product Unit of Measurement
+     * ==================================================
+     */
+
+    public function actionUnitOfMeasurement()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Unit of Measurement';
+
+        $model->TYPE = "Unit of Measurement";
+        $model->CODE = "UOM";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * ==================================================
+     * Product Category
+     * ==================================================
+     */
+
+    public function actionProductCategory()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Product Category';
+
+        $model->TYPE = "Product Category";
+        $model->CODE = "CATEGORY";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+
+    /*
+     * ==================================================
+     * Supplier Group Setup
+     * ==================================================
+     */
+
+    public function actionSupplierGroup()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Supplier Group';
+
+        $model->TYPE = "Supplier Group";
+        $model->CODE = "SUPPLIER";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
+
+    /*
+     * ==================================================
+     * Customer Group Setup
+     * ==================================================
+     */
+
+    public function actionCustomerGroup()
+    {
+        $model = new Codesparam;
+        $pageTitle = 'New Customer Group';
+
+        $model->TYPE = "Customer Group";
+        $model->CODE = "CUSTOMER";
+        $model->ip_address = getHostByName(getHostName());
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'pageTitle' => $pageTitle,
+            ]);
+        }
+    }
+
     /**
      * Updates an existing Codesparam model.
      * If update is successful, the browser will be redirected to the 'view' page.

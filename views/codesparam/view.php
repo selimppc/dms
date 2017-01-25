@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var app\models\Codesparam $model
  */
 
-$this->title = $model->id;
+$this->title = $model->description;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Codesparams'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -45,10 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'percentage',
             'active',
             'ip_address',
-            'insert_time',
-            'update_time',
-            'insert_user',
-            'update_user',
             'business_id',
         ],
     ]) ?>

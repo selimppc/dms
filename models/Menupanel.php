@@ -55,6 +55,20 @@ class Menupanel extends \yii\db\ActiveRecord
             'c_parentid' => Yii::t('app', 'Menu Parent'),
             'c_sortord' => Yii::t('app', 'Menu Order'),
             'inserttime' => Yii::t('app', 'Insert Time'),
+
+
+            'menuType.c_name' => Yii::t('app', 'Category'),
+            'menuParent.c_name' => Yii::t('app', 'Menu Parent'),
         ];
     }
+
+    public function getMenuType()
+    {
+        return $this->hasOne(Menupanel::className(), ['id' => 'c_id']);
+    }
+    public function getMenuParent()
+    {
+        return $this->hasOne(Menupanel::className(), ['id' => 'c_parentid']);
+    }
+
 }

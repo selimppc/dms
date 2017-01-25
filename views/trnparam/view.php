@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
  * @var app\models\Trnparam $model
  */
 
-$this->title = $model->id;
+$this->title = $model->description;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Transaction'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -40,11 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'increment',
             'active',
             'ip_address',
-            'insert_time',
-            'update_time',
-            'insert_user',
-            'update_user',
-            'business_id',
+            //'business_id',
+            'businessId.company_name'
         ],
     ]) ?>
 

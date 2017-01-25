@@ -27,6 +27,7 @@ use Yii;
  */
 class Trnparam extends \yii\db\ActiveRecord
 {
+    public $BusinessId;
     /**
      * @inheritdoc
      */
@@ -43,7 +44,7 @@ class Trnparam extends \yii\db\ActiveRecord
         return [
             [['TYPE', 'CODE', 'business_id'], 'required'],
             [['ACTION', 'last_number', 'increment', 'active', 'business_id'], 'integer'],
-            [['insert_time', 'update_time'], 'safe'],
+            [['insert_time', 'businessId', 'update_time'], 'safe'],
             [['TYPE', 'branch_code', 'insert_user', 'update_user'], 'string', 'max' => 50],
             [['CODE'], 'string', 'max' => 4],
             [['description'], 'string', 'max' => 100],
@@ -79,8 +80,8 @@ class Trnparam extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBusiness()
+    public function getBusinessId()
     {
-        return $this->hasOne(ZBusiness::className(), ['id' => 'business_id']);
+        return $this->hasOne(Business::className(), ['id' => 'business_id']);
     }
 }

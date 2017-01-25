@@ -12,11 +12,13 @@ use app\models\Trnparam;
  */
 class TrnparamSearch extends Trnparam
 {
+    public $businessId;
+
     public function rules()
     {
         return [
             [['id', 'ACTION', 'last_number', 'increment', 'active', 'business_id'], 'integer'],
-            [['TYPE', 'CODE', 'branch_code', 'description', 'ip_address', 'insert_time', 'update_time', 'insert_user', 'update_user'], 'safe'],
+            [['TYPE', 'CODE', 'branch_code', 'description', 'businessId', 'ip_address', 'insert_time', 'update_time', 'insert_user', 'update_user'], 'safe'],
         ];
     }
 
@@ -55,7 +57,8 @@ class TrnparamSearch extends Trnparam
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'ip_address', $this->ip_address])
             ->andFilterWhere(['like', 'insert_user', $this->insert_user])
-            ->andFilterWhere(['like', 'update_user', $this->update_user]);
+            ->andFilterWhere(['like', 'update_user', $this->update_user])
+            ->andFilterWhere(['like', 'z_business.company_name', $this->businessId]);
 
         return $dataProvider;
     }

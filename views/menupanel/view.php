@@ -9,7 +9,7 @@ use yii\bootstrap\Alert;
  * @var app\models\Menupanel $model
  */
 
-$this->title = $model->id;
+$this->title = $model->c_name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Menu Panels'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -40,13 +40,16 @@ if($flash = Yii::$app->session->getFlash('success')){
         'model' => $model,
         'attributes' => [
             'id',
-            'c_id',
+            //'c_id',
+            'menuType.c_name',
             'c_type',
             'c_name',
             'c_redirect',
-            'c_parentid',
-            'c_sortord',
+            //'c_parentid',
+            'menuParent.c_name',
+            //'c_sortord',
             'inserttime',
+
         ],
     ]) ?>
 

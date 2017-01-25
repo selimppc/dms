@@ -68,7 +68,7 @@ if($flash = Yii::$app->session->getFlash('success')){
             //'id',
             'c_name',
             'c_desc',
-           /* [
+            /*[
                 'attribute'=> 'c_active',
                 'value' => $model->c_active,
             ],*/
